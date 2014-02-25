@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="Lazy initialized doubly checked locking volatile variable" enabled="true" name="lazy">	/**&#13;
+	 * The ${field} (lazy initialized)&#13;
+	 */&#13;
+	private volatile ${type} ${field};&#13;
+&#13;
+	/**&#13;
+	 * Gets the ${field}&#13;
+	 *&#13;
+	 * @return the ${field}&#13;
+	 */&#13;
+	${visibility:link('public','protected','','private')} ${type} ${get}() {&#13;
+		${type} result = this.${field};&#13;
+		if (result == null) {&#13;
+			synchronized (this) {&#13;
+				result = this.${field};&#13;
+				if (result == null) {&#13;
+					result = new ${type}(${cursor});&#13;
+					this.${field} = result;&#13;
+				}&#13;
+			}&#13;
+		}&#13;
+		return result;&#13;
+	}</template></templates>
